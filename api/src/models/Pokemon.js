@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
     name: {
+      //incluir campo uuid para el id unico
       type: DataTypes.STRING,
       allowNull: false,
     },
