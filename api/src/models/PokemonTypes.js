@@ -6,7 +6,14 @@ module.exports = (sequelize) => {
         ID: {
             type: DataTypes.INTEGER,
             allowNull: false, 
+            autoIncrement: true,
+            primaryKey: true,
             //agregar la parte de primary key
+        },
+
+        NOMBRE: {
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     })
 }

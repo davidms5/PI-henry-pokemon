@@ -5,8 +5,15 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
     id:{
-      tyoe: DataTypes.UUID,
+      type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+
+    id_pokemon:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+
     },
 
     name: {
@@ -14,5 +21,37 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    imagen: {
+      type: DataTypes.STRING,
+      //hacer un default value para poner una imagen por defecto
+    },
+    vida: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    ataque: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    defensa: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+    velocidad: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    altura: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    peso: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   });
 };
