@@ -10,14 +10,10 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
 
-    id_pokemon:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
 
-    },
 
     name: {
-      //incluir campo uuid para el id unico
+      
       type: DataTypes.STRING,
       allowNull: false,
     },
