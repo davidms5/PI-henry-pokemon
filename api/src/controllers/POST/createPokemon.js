@@ -1,5 +1,5 @@
 const {Pokemon} = require("../../db.js");
 
-const CreatePokemon = (req, res) =>{
+const CreatePokemon = async(req, res) =>{
 
 }
