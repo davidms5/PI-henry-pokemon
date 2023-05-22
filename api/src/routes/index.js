@@ -3,6 +3,8 @@ const { Router } = require('express');
 // Ejemplo: const authRouter = require('./auth.js');
 const getAllPokemons = require("../controllers/GET/getAllPokemons");
 const getPokemonById = require('../controllers/GET/getPokemonById');
+const getTypes = require('../controllers/GET/getTypes');
+
 
 
 const router = Router();
@@ -13,4 +15,5 @@ router.get("/pokemons", getAllPokemons);
 
 router.get("/pokemons/:idPokemon", getPokemonById);
 
+router.get("/types", getTypes);
 module.exports = router;

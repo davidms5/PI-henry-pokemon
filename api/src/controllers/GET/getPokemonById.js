@@ -1,5 +1,6 @@
 const {Pokemon} = require("../../db");
-const axios = require("axios");
+const  {requestAPI}  = require("./apiResponse/apiResponse");
+const modeloPokemon = require("../../objectModel/model");
 
 const getPokemonById = async(req, res) =>{
 
@@ -11,7 +12,13 @@ const getPokemonById = async(req, res) =>{
         if(!idPokemon) res.status(404).send("pokemon no encontrado")
         
         if(prueba){
-            let response = await Pokemon.findOne({where:{id:idPokemon}});
+            let response = await Pokemon.findOne({
+                where:{id:idPokemon},
+                include: {
+                    model:Types,
+                    attributes:[["NOMBRE", "tipo"]]
+                }
+            });
 
             if(!response) res.status(404).send("el pokemon no existe");//hacer test de esta linea
 
@@ -19,22 +26,14 @@ const getPokemonById = async(req, res) =>{
 
         } else {
 
-            let apiResponse = await axios(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`)
+            if (typeof idPokemon !== "number") res.status(404).json({error:"id not valid"})
+            
+            let apiResponse = await requestAPI(idPokemon); 
 
-            let {species, id, sprites, stats, weight, height} = apiResponse.data;
+            let {species, id, sprites, stats, weight, height, types} = apiResponse;
 
-            let pokemon = {
-                id: id,
-                nombre: species?.name,
-                imagen: sprites?.front_default,
-                vida: stats[0]?.base_stat,
-                ataque: stats[1]?.base_stat,
-                defensa: stats[2]?.base_stat,
-                velocidad: stats[5]?.base_stat,
-                altura: height,
-                peso: weight,
-            };
-
+            let pokemon = modeloPokemon(species, id, sprites, stats, weight, height, types)
+            
             res.status(200).json(pokemon);
         }
         
