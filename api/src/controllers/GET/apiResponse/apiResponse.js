@@ -1,22 +1,32 @@
 const axios = require("axios");
 const modeloPokemon = require("../../../objectModel/model");
 
+class NotFoundError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'NotFoundError';
+    }
+  }
+
 const requestAPI = async(peticion) =>{
 
     try {
         const resultado = await axios.get(`https://pokeapi.co/api/v2/pokemon/${peticion}`);
-
-        return resultado.data;
+        
+           return resultado.data; 
+        
+        
     } catch (error) {
-        console.error(`error fetching data for ${peticion}:`, error);
-        throw error;
+        
+        console.log(`error fetching data for ${peticion}:`, error);
+        return null;
     }
     
 };
 
 const requestAPIAll = async() => {
 
-    const response = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=20000");
+    const response = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=10000");
 
     const pokemons = response.data.results;
 

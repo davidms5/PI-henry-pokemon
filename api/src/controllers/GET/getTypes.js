@@ -1,5 +1,5 @@
 const {Types} = require("../../db");
-const {requestAPITypes} = require("./apiResponse/apiResponse.js")
+const {requestAPITypes} = require("./apiResponse/apiresponse.js")
 const getTypes = async(req, res) =>{
 
     try {
@@ -11,7 +11,7 @@ const getTypes = async(req, res) =>{
             return res.status(201).json(listTypes);
         }
 
-        const respuesta = await Types.findAll();
+        const respuesta = await Types.findAll({attributes:["ID", "NOMBRE"]});
         return res.status(200).json(respuesta);
         
     } catch (error) {

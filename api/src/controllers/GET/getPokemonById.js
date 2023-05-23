@@ -1,4 +1,4 @@
-const {Pokemon} = require("../../db");
+const {Pokemon, Types} = require("../../db");
 const  {requestAPI}  = require("./apiResponse/apiResponse");
 const modeloPokemon = require("../../objectModel/model");
 
@@ -9,24 +9,25 @@ const getPokemonById = async(req, res) =>{
 
     const prueba = regexExp.test(idPokemon)
     try {
-        if(!idPokemon) res.status(404).send("pokemon no encontrado")
+        if(!idPokemon) return res.status(404).send("pokemon no encontrado")
         
         if(prueba){
             let response = await Pokemon.findOne({
                 where:{id:idPokemon},
                 include: {
                     model:Types,
-                    attributes:[["NOMBRE", "tipo"]]
+                    attributes:[["NOMBRE", "tipo"]],
+                    through: { attributes: [] }
                 }
             });
 
-            if(!response) res.status(404).send("el pokemon no existe");//hacer test de esta linea
+            if(!response) return res.status(404).send("el pokemon no existe");//hacer test de esta linea
 
-            res.status(200).json(response);
+            return res.status(200).json(response);
 
         } else {
 
-            if (typeof idPokemon !== "number") res.status(404).json({error:"id not valid"})
+            if (isNaN(parseFloat(idPokemon)) || isNaN(idPokemon - 0)) return res.status(404).json({error:"id not valid"})
             
             let apiResponse = await requestAPI(idPokemon); 
 
@@ -34,7 +35,7 @@ const getPokemonById = async(req, res) =>{
 
             let pokemon = modeloPokemon(species, id, sprites, stats, weight, height, types)
             
-            res.status(200).json(pokemon);
+            return res.status(200).json(pokemon);
         }
         
 
@@ -42,7 +43,7 @@ const getPokemonById = async(req, res) =>{
        
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({message: error.message});
+        return res.status(500).json({message: error.message});
     }
 };
 

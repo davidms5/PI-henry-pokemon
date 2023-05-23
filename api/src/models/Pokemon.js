@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
 
     imagen: {
       type: DataTypes.STRING,
-      //hacer un default value para poner una imagen por defecto
+      //hacer un default value para poner una imagen por defecto ó poner una imagen en el front y llamarla si no hay link de foto
     },
     vida: {
       type: DataTypes.INTEGER,
@@ -49,5 +49,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false
     }
+  },
+  {
+    timestamps: false
   });
 };
