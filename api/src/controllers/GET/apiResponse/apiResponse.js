@@ -42,25 +42,30 @@ const requestAPIAll = async(retries = 15) => {
     try {
         const response = await axiosInstance.get("https://pokeapi.co/api/v2/pokemon/?limit=386");
 
-    const pokemons = await response.data.results;
+        const pokemons = await response.data.results;
 
-    const pokemonPromises = pokemons.map(async (pokemon) => {
-        const pokemonResponse = await axiosInstance.get(pokemon.url);
+        const pokemonPromises = pokemons.map(async (pokemon) => {
 
-        const {species, id, sprites, stats, weight, height, types} = pokemonResponse.data;
-        const pokemonList = modeloPokemon(species, id, sprites, stats, weight, height, types);
-        return pokemonList;
-      });
+            const pokemonResponse = await axiosInstance.get(pokemon.url);
 
-      const pokemonDataArray = await Promise.all(pokemonPromises);
-      return pokemonDataArray;
+            const {species, id, sprites, stats, weight, height, types} = pokemonResponse.data;
+
+            const pokemonList = modeloPokemon(species, id, sprites, stats, weight, height, types);
+
+            return pokemonList;
+         });
+
+        const pokemonDataArray = await Promise.all(pokemonPromises);
+
+        return pokemonDataArray;
+
     } catch (error) {
         console.log("error in requestAPIAll", error.message);
         const shouldRetry = await handleRetryAfter(error);
         if (shouldRetry) {
-        return requestAPIAll(retries);
+            return requestAPIAll(retries);
         } else {
-        return requestAPIAll(retries - 1);
+            return requestAPIAll(retries - 1);
         }
     }
     

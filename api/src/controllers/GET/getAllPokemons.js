@@ -44,6 +44,7 @@ const getAllPokemons = async(req, res) =>{
 
         const responseDataBase = await Pokemon.findAll();
         const responseAPI = await requestAPIAll();
+        
         return res.status(200).json([...responseAPI, ...responseDataBase]);
 
         } catch (error){

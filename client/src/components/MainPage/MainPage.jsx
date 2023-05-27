@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import "./MainPage.css"
 
 export default function MainPage() {
-  
+  // aqui tambien se podria aplicar un useEffect que se ejecutara cada vez que se accediera a este component, y verificara si pokemon.length > 0, de no ser asi hiciera un solo fetch de la api para llenar la lista con los pokemon
   const loading = useSelector((state) => state.loadingPage);
   const error = useSelector((state) => state.error);
 
