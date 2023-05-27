@@ -9,7 +9,7 @@ const modeloPokemon = (species, id, sprites, stats, weight, height, types) =>{
     let pokemon = {
         id: id,
         nombre: species?.name,
-        imagen: sprites?.front_default,
+        imagen: sprites?.other?.dream_world?.front_default,
         vida: stats[0]?.base_stat,
         ataque: stats[1]?.base_stat,
         defensa: stats[2]?.base_stat,

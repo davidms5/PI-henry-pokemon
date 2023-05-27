@@ -32,7 +32,7 @@ const requestAPI = async(peticion) =>{
     
 };
 
-const requestAPIAll = async(retries = 30) => {
+const requestAPIAll = async(retries = 15) => {
 
     if (retries <= 0) {
         console.log("Max retries reached");

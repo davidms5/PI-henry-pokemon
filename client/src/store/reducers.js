@@ -1,11 +1,19 @@
-import { FETCH_POKEMON, FETCH_POKEMON_FAILED, FETCH_POKEMON_SUCCESS } from "./actions";
+import { FETCH_POKEMON, FETCH_POKEMON_FAILED, FETCH_POKEMON_SUCCESS, SET_NAME_FILTER } from "./actions";
+import {persistReducer} from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
 
+const persistConfig = {
+    key: 'root',
+    storage: storageSession,
+  };
+  
 
 const initialState = {
     pokemonAPI: [],
     loadingPage: false,
    // pagination: 1,
-    error: null
+    error: null,
+    nameFilter:"",
 
 }
 
@@ -19,11 +27,17 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
 
         case FETCH_POKEMON_FAILED:
             return {...state, loadingPage: false, error: error.message};
-    
+
+        case SET_NAME_FILTER:
+            return {...state, nameFilter: payload};
+
         default:
             return state;
             
     }
 }
 
-export default pokemonReducer;
+const persistedReducer = persistReducer(persistConfig, pokemonReducer);
+
+
+export default persistedReducer;

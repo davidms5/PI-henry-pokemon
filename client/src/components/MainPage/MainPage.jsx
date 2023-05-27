@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPokemon } from '../../store/actions';
+import { useSelector } from 'react-redux';
 import SearchBar from './SearchBar/SearchBar';
+import Cards from './DisplayCards/Cards';
 import { Link } from 'react-router-dom';
 import "./MainPage.css"
+
 export default function MainPage() {
-  const dispatch = useDispatch();
-  const pokemon = useSelector((state) => state.pokemonAPI);
+  
   const loading = useSelector((state) => state.loadingPage);
   const error = useSelector((state) => state.error);
 
   useEffect(() => {
-    dispatch(fetchPokemon());
-  }, [dispatch]);
+    if (error) {
+      window.location.reload();
+    }
+  }, [error]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,10 +34,8 @@ export default function MainPage() {
         </Link>
       </div>
       
-      {
-        pokemon.map((p, index) => (
-          <div key={index}>{p.nombre}</div>
-        ))}
+      <Cards/>
+      
     </div>
   );
 }
