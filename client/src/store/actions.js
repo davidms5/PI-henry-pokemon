@@ -1,8 +1,14 @@
 import axios from "axios";
-export const FETCH_POKEMON = "FETCH_POKEMON";
-export const FETCH_POKEMON_SUCCESS = "FETCH_POKEMON_SUCCESS";
-export const FETCH_POKEMON_FAILED = "FETCH_POKEMON_FAILED";
-export const SET_NAME_FILTER = 'SET_NAME_FILTER';
+import {
+    FETCH_POKEMON, 
+    FETCH_POKEMON_SUCCESS, 
+    FETCH_POKEMON_FAILED,
+    SET_NAME_FILTER,
+    SET_SOURCE_FILTER,
+    SET_TYPE_FILTER,
+    SET_ALPHABETIC_ORDER,
+    SET_ORDER_ATTACK } from "./actionTypes"
+
 
 export const fetchPokemon = () => async(dispatch) =>{
     try {
@@ -21,3 +27,23 @@ export const setNameFilter = (name) => ({
     type: SET_NAME_FILTER,
     payload: name,
   });
+
+export const setSourceFilter = (filter) => ({
+    type: SET_SOURCE_FILTER,
+    payload: filter,
+});
+
+export const setTypeFilter = (type) =>({
+    type: SET_TYPE_FILTER,
+    payload: type,
+})
+
+export const setAlphabeticOrder = (order) =>({
+    type: SET_ALPHABETIC_ORDER,
+    payload: order
+});
+
+export const setOrderAttack = (attack) => ({
+    type: SET_ORDER_ATTACK,
+    payload: attack,
+})

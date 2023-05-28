@@ -21,7 +21,7 @@ const CreatePokemon = async(req, res) =>{
       return res.status(400).json({message:"falta informacion para crear el pokemon ó el nombre de las variables recibidas es erroneo"});
      }
 
-    let url = null;
+    let url = process.env.DEFAULT_IMAGE;
 
     if(imagen){
 
