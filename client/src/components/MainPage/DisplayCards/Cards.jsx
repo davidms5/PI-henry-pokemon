@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {Link} from "react-router-dom";
 import { fetchPokemon } from "../../../store/actions";
 import Card from "./Card/Card";
 import { filterPokemon, sortPokemon } from "./cardsLogic";
@@ -17,11 +18,7 @@ export default function Cards(){
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
-    useEffect(() => {
-        if (pokemon.length === 0) {
-          dispatch(fetchPokemon());
-        }
-      }, [dispatch, pokemon]);
+   
 
       const filteredPokemon = filterPokemon(pokemon, filterName, filterSource, filterType);
 
@@ -47,7 +44,10 @@ export default function Cards(){
         { currentPokemon.length > 0?
             currentPokemon.map((p, index) => (
             <div key={index}>
-            <Card pokemon={p} />
+              <Link to={`/pokemon/${p.nombre}`}>
+                <Card pokemon={p} />
+              </Link>
+            
             </div>
             )) : <p>ningun pokemon encontrado</p>
         }

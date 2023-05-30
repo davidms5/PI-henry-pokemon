@@ -10,13 +10,13 @@ const getAllPokemons = async(req, res) =>{
         try {
 
             const responseDataBase = await Pokemon.findOne({
-                where:{name:name},
+                where:{nombre:name},
                  include: {
                  model: Types,
-                 attributes:[["NOMBRE", "tipo"]],
                  through: { attributes: [] }
                     }
                  }); 
+
 
             if(!responseDataBase){
                const namePokemon = await requestAPI(name); 
@@ -25,12 +25,17 @@ const getAllPokemons = async(req, res) =>{
                 return res.status(404).send("el pokemon no existe")
                }
                
-               const {species, id, sprites, stats, weight, height, types} = namePokemon;
-               const datapokemon = modeloPokemon(species, id, sprites, stats, weight, height, types);
+               const datapokemon = modeloPokemon(namePokemon);
                return res.status(200).json(datapokemon)
             }
 
-            return res.status(200).json(responseDataBase);
+            const types = responseDataBase.Types.map((type) => type.NOMBRE);
+
+            
+
+            const correctTypesResponseDatabase = {...responseDataBase.toJSON(), Types: types};
+
+            return res.status(200).json(correctTypesResponseDatabase);
 
             
           
@@ -42,10 +47,19 @@ const getAllPokemons = async(req, res) =>{
 
         try{
 
-        const responseDataBase = await Pokemon.findAll();
+        const responseDataBase = await Pokemon.findAll({include: {
+            model: Types, 
+            through: { attributes: [] }, 
+          },});
+
+          const mergedData = responseDataBase.map((pokemon) => {
+            const types = pokemon.Types.map((type) => type.NOMBRE);
+            return { ...pokemon.toJSON(), Types: types };
+          });
+        
         const responseAPI = await requestAPIAll();
         
-        return res.status(200).json([...responseAPI, ...responseDataBase]);
+        return res.status(200).json([...responseAPI, ...mergedData]);
 
         } catch (error){
         return res.status(500).json({message: error.message})

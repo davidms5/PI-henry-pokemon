@@ -1,5 +1,6 @@
-import { FETCH_POKEMON, 
+import { ADD_CREATED_POKEMON, FETCH_POKEMON, 
     FETCH_POKEMON_FAILED, 
+    FETCH_POKEMON_RESET, 
     FETCH_POKEMON_SUCCESS, 
     SET_ALPHABETIC_ORDER, 
     SET_NAME_FILTER,
@@ -37,6 +38,9 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
 
         case FETCH_POKEMON_FAILED:
             return {...state, loadingPage: false, error: error.message};
+        
+        case FETCH_POKEMON_RESET:
+            return {...state, loadingPage: true, error: null};
 
         case SET_NAME_FILTER:
             return {...state, nameFilter: payload};
@@ -52,6 +56,9 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
 
         case SET_ORDER_ATTACK:
             return {...state, attack:payload};
+
+        case ADD_CREATED_POKEMON:
+            return {...state, pokemonAPI: [...state.pokemonAPI, payload]}
 
         default:
             return state;

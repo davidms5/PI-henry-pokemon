@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { setAlphabeticOrder, setNameFilter, setSourceFilter, setTypeFilter, setOrderAttack } from "../../../store/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import axios from "axios";
 export default  function SearchBar (){
 
@@ -12,7 +12,7 @@ export default  function SearchBar (){
         dispatch(setOrderAttack(""))
     }, [])
 
-    useEffect(async() =>{
+    useEffect(() =>{
         const fetchPokemonTypes = async () => {
             try {
               const response = await axios.get(

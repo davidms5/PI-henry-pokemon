@@ -7,7 +7,9 @@ import {
     SET_SOURCE_FILTER,
     SET_TYPE_FILTER,
     SET_ALPHABETIC_ORDER,
-    SET_ORDER_ATTACK } from "./actionTypes"
+    SET_ORDER_ATTACK, 
+    FETCH_POKEMON_RESET,
+    ADD_CREATED_POKEMON } from "./actionTypes"
 
 
 export const fetchPokemon = () => async(dispatch) =>{
@@ -20,6 +22,7 @@ export const fetchPokemon = () => async(dispatch) =>{
 
     } catch (error) {
         dispatch({type: FETCH_POKEMON_FAILED, error})
+       
     }
 }
 
@@ -46,4 +49,13 @@ export const setAlphabeticOrder = (order) =>({
 export const setOrderAttack = (attack) => ({
     type: SET_ORDER_ATTACK,
     payload: attack,
-})
+});
+
+export const fetchReset = () => ({
+    type: FETCH_POKEMON_RESET,
+});
+
+export const addCreatedPokemon = (pokemon) => ({
+    type: ADD_CREATED_POKEMON,
+    payload: pokemon,
+});

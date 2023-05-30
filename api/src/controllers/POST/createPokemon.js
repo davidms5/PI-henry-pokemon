@@ -31,7 +31,7 @@ const CreatePokemon = async(req, res) =>{
     }
 
      const newPokemon = await Pokemon.create({
-      name: nombre,
+      nombre: nombre,
       imagen: url,
       vida: vida,
       ataque: ataque,

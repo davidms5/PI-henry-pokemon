@@ -9,7 +9,7 @@ export function filterPokemon(pokemon, filterName, filterSource, filterType) {
           (filterSource === "api" && typeof p.id === "number") ||
           (filterSource === "database" && typeof p.id === "string");
 
-        const typeMatch = filterType === "" || filterType === "all"|| p.tipo.includes(filterType);
+        const typeMatch = filterType === "" || filterType === "all"|| p.Types.includes(filterType);
         return nameMatch && sourceMatch && typeMatch;
       });
     return filteredPokemon;

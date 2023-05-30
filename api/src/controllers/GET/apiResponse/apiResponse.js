@@ -2,7 +2,7 @@ const axios = require("axios");
 const modeloPokemon = require("../../../objectModel/model");
 
 const axiosInstance = axios.create({
-    timeout: 5000,
+    timeout: 3000,
   });
   
 const handleRetryAfter = (error) => {
@@ -14,6 +14,7 @@ const handleRetryAfter = (error) => {
     }
     return Promise.resolve(false);
 };
+
 
 
 const requestAPI = async(peticion) =>{
@@ -32,32 +33,44 @@ const requestAPI = async(peticion) =>{
     
 };
 
-const requestAPIAll = async(retries = 15) => {
+const requestAPIAll = async(retries = 3) => {
 
     if (retries <= 0) {
         console.log("Max retries reached");
         return [];
       }
 
+      const pokemonPromise = [];
+      
+
     try {
-        const response = await axiosInstance.get("https://pokeapi.co/api/v2/pokemon/?limit=386");
+        
+        const response = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=386");
 
         const pokemons = await response.data.results;
 
-        const pokemonPromises = pokemons.map(async (pokemon) => {
+        for(const pokemon of pokemons){
+            pokemonPromise.push(axios.get(pokemon.url));
+        };
 
-            const pokemonResponse = await axiosInstance.get(pokemon.url);
+        const respuestasPokemonUrl = await axios.all(pokemonPromise);
 
-            const {species, id, sprites, stats, weight, height, types} = pokemonResponse.data;
+        //const pokemonPromises = pokemons.map(async (pokemon, index) => {
+//
+        //    //await delay(index * 100);
+//
+        //    const pokemonResponse = await axiosInstance.get(pokemon.url);
+//
+        //    const {species, id, sprites, stats, weight, height, types} = pokemonResponse.data;
+//
+        const pokemonList = modeloPokemon(respuestasPokemonUrl);
+//
+        //    return pokemonList;
+        // });
+//
+        //const pokemonDataArray = await Promise.all(pokemonPromises);
 
-            const pokemonList = modeloPokemon(species, id, sprites, stats, weight, height, types);
-
-            return pokemonList;
-         });
-
-        const pokemonDataArray = await Promise.all(pokemonPromises);
-
-        return pokemonDataArray;
+        return pokemonList;
 
     } catch (error) {
         console.log("error in requestAPIAll", error.message);
