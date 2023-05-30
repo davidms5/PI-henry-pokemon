@@ -90,7 +90,9 @@ const requestAPITypes = async() => {
     const response = await axios.get("https://pokeapi.co/api/v2/type");
     const {results} = response.data;
 
-    const listTypes = results.map(type => {
+    const listTypes = results
+    .filter(type => type.name !== "fairy")
+    .map(type => {
         return {NOMBRE:type.name}
     });
 
