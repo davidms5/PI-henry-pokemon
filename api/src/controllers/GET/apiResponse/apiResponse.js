@@ -55,14 +55,6 @@ const requestAPIAll = async(retries = 3) => {
 
         const respuestasPokemonUrl = await axios.all(pokemonPromise);
 
-        //const pokemonPromises = pokemons.map(async (pokemon, index) => {
-//
-        //    //await delay(index * 100);
-//
-        //    const pokemonResponse = await axiosInstance.get(pokemon.url);
-//
-        //    const {species, id, sprites, stats, weight, height, types} = pokemonResponse.data;
-//
         const pokemonList = modeloPokemon(respuestasPokemonUrl);
 //
         //    return pokemonList;
