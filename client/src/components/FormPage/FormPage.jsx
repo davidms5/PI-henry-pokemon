@@ -23,6 +23,9 @@ export default function FormPage(){
 
   const handleTypeChange = (event) => {
     const { value } = event.target;
+    if(formData.tipos.length === 2){
+      return "numero maximo de tipos";
+    }
     setFormData((prevData) => ({ ...prevData, types: [...prevData.types, value] }));
   };
 
