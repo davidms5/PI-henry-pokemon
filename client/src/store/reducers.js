@@ -2,6 +2,7 @@ import { ADD_CREATED_POKEMON, FETCH_POKEMON,
     FETCH_POKEMON_FAILED, 
     FETCH_POKEMON_RESET, 
     FETCH_POKEMON_SUCCESS, 
+    FETCH_POKEMON_TYPES, 
     SET_ALPHABETIC_ORDER, 
     SET_NAME_FILTER,
     SET_ORDER_ATTACK,
@@ -18,6 +19,7 @@ const persistConfig = {
 
 const initialState = {
     pokemonAPI: [],
+    pokemonTypes: [],
     loadingPage: false,
    // pagination: 1,
     error: null,
@@ -32,6 +34,9 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
     switch (type) {
         case FETCH_POKEMON:
             return {...state, loadingPage: true};
+
+        case FETCH_POKEMON_TYPES:
+            return {...state, pokemonTypes: payload};
 
         case FETCH_POKEMON_SUCCESS:
             return {...state, loadingPage: false, pokemonAPI: payload};

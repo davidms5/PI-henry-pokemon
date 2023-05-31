@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { setAlphabeticOrder, setNameFilter, setSourceFilter, setTypeFilter, setOrderAttack } from "../../../store/actions";
-import { useDispatch, } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import axios from "axios";
 export default  function SearchBar (){
 
@@ -12,27 +12,28 @@ export default  function SearchBar (){
         dispatch(setOrderAttack(""))
     }, [])
 
-    useEffect(() =>{
-        const fetchPokemonTypes = async () => {
-            try {
-              const response = await axios.get(
-                process.env.REACT_APP_API_URL || "http://localhost:3001/types"
-              );
-              setType(response.data);
-            } catch (error) {
-              console.error("Failed to fetch pokemon types:", error);
-            }
-          };
-      
-          fetchPokemonTypes();
-    }, [])
+    //useEffect(() =>{
+    //    const fetchPokemonTypes = async () => {
+    //        try {
+    //          const response = await axios.get(
+    //            process.env.REACT_APP_API_URL || "http://localhost:3001/types"
+    //          );
+    //          setType(response.data);
+    //        } catch (error) {
+    //          console.error("Failed to fetch pokemon types:", error);
+    //        }
+    //      };
+    //  
+    //      fetchPokemonTypes();
+    //}, [])
     //const nameFilter = useSelector((state) => state.nameFilter)
 
     const dispatch = useDispatch();
+    const type = useSelector((state) => state.pokemonTypes);
+
     const [searchQuery, setSearchQuery] = useState("");
     const [filterSource, setFilterSource] = useState("");
     const [filterType, setFilterType] = useState("");
-    const [type, setType] = useState([])
     const [letterOrder, setLetterOrder] = useState("default");
     const [sortingAttack, setSortingAttack] = useState("");
     
@@ -79,8 +80,8 @@ export default  function SearchBar (){
                     <option key="all" value="all">All</option>
                     {type.map((tipos, index) =>
                         
-                        <option key={index} value={tipos.NOMBRE}>
-                            {tipos.NOMBRE}
+                        <option key={index} value={tipos}>
+                            {tipos}
                         </option>
                             
                         )}

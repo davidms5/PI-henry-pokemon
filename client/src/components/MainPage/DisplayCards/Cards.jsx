@@ -7,7 +7,7 @@ import { filterPokemon, sortPokemon } from "./cardsLogic";
 
 export default function Cards(){
 
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const pokemon = useSelector((state) => state.pokemonAPI);
     const filterName = useSelector((state) => state.nameFilter);
     const filterSource = useSelector((state) => state.sourceFilter);

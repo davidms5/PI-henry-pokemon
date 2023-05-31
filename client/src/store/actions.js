@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
-    FETCH_POKEMON, 
+    FETCH_POKEMON,
+    FETCH_POKEMON_TYPES, 
     FETCH_POKEMON_SUCCESS, 
     FETCH_POKEMON_FAILED,
     SET_NAME_FILTER,
@@ -16,7 +17,12 @@ export const fetchPokemon = () => async(dispatch) =>{
     try {
         dispatch({type: FETCH_POKEMON});
         const response = await axios.get("http://localhost:3001/pokemons");
+        const responseTypes = await axios.get("http://localhost:3001/types");
+        const tiposPokemon = await responseTypes.data;
         const pokemons = await response.data;
+
+        const tiposPokemonFilter = tiposPokemon.map(type => type.NOMBRE);
+        dispatch({type: FETCH_POKEMON_TYPES, payload: tiposPokemonFilter});
         
         dispatch({type: FETCH_POKEMON_SUCCESS, payload: pokemons})
 
@@ -24,7 +30,9 @@ export const fetchPokemon = () => async(dispatch) =>{
         dispatch({type: FETCH_POKEMON_FAILED, error})
        
     }
-}
+};
+
+
 
 export const setNameFilter = (name) => ({
     type: SET_NAME_FILTER,
