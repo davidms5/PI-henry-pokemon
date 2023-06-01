@@ -9,6 +9,7 @@ export default function FormPage(){
   const type = useSelector((state) => state.pokemonTypes);
 
   const [selectedImage, setSelectedImage] = useState(null);
+ 
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -95,7 +96,20 @@ export default function FormPage(){
   
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+
+    if (file) {
+    const fileType = file.type;
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg']; // Add more valid image types if needed
+
+    if (!validImageTypes.includes(fileType)) {
+      
+      alert('Please select a valid image file (JPEG, PNG, GIF, JPG).');
+      event.target.value = null; 
+      return;
+    };
     setSelectedImage(file);
+   };
+   
   };
 
   const handleSubmit = async (event) => {
@@ -127,17 +141,34 @@ export default function FormPage(){
 
     try {
       
+      //const postData = new FormData();
+      //postData.append('nombre', formData.nombre);
+      //postData.append('vida', formData.vida);
+      //postData.append('ataque', formData.ataque);
+      //postData.append('defensa', formData.defensa);
+      //postData.append('velocidad', formData.velocidad);
+      //postData.append('altura', formData.altura);
+      //postData.append('peso', formData.peso);
+      //formData.tipos.forEach((tipo) => postData.append('tipos[]', tipo));
+//
+      //if (selectedImage) {
+      //  postData.append('imagen', selectedImage);
+      //}
+
+     
+      
+      
       const newPokemon = await axios.post(process.env.REACT_APP_API_URL || 'http://localhost:3001/pokemons', formData); 
 
       
       setFormData({
         nombre: '',
-        vida: 0,
-        ataque: 0,
-        defensa: 0,
-        velocidad: 0,
-        altura: 0,
-        peso: 0,
+        vida: null,
+        ataque: null,
+        defensa: null,
+        velocidad: null,
+        altura: null,
+        peso: null,
         tipos: [],
       });
 
@@ -165,7 +196,7 @@ export default function FormPage(){
         <div>formulario pokemon
           <Link to="/pokemon"><button>go back</button></Link>
           <h2>Create a New Pokemon</h2>
-        {console.log(formData.tipos)}
+        
       <form onSubmit={handleSubmit}>
         {/* ir viendo y agregando excepciones */}
         <label htmlFor="nombre">Nombre:</label>
@@ -173,31 +204,31 @@ export default function FormPage(){
         {formErrors.nombre && <p>{formErrors.nombre}</p>}
 
         <label htmlFor="vida">HP:</label>
-        <input type="number" id="vida" name="vida" value={formData.vida} onChange={handleInputChange} />
+        <input type="number" id="vida" name="vida" value={formData.vida || ""} onChange={handleInputChange} />
         {formErrors.vida && <p>{formErrors.vida}</p>}
 
         <label htmlFor="ataque">Ataque:</label>
-        <input type="number" id="ataque" name="ataque" value={formData.ataque} onChange={handleInputChange} />
+        <input type="number" id="ataque" name="ataque" value={formData.ataque || ""} onChange={handleInputChange} />
         {formErrors.ataque && <p>{formErrors.ataque}</p>}
 
         <label htmlFor="defensa">Defensa:</label>
-        <input type="number" id="defensa" name="defensa" value={formData.defensa} onChange={handleInputChange} />
+        <input type="number" id="defensa" name="defensa" value={formData.defensa || ""} onChange={handleInputChange} />
         {formErrors.defensa && <p>{formErrors.defensa}</p>}
 
         <label htmlFor="velocidad">Velocidad:</label>
-        <input type="number" id="velocidad" name="velocidad" value={formData.velocidad} onChange={handleInputChange} />
+        <input type="number" id="velocidad" name="velocidad" value={formData.velocidad || ""} onChange={handleInputChange} />
         {formErrors.velocidad && <p>{formErrors.velocidad}</p>}
 
         <label htmlFor="altura">Altura:</label>
-        <input type="number" id="altura" name="altura" value={formData.altura} onChange={handleInputChange} />
+        <input type="number" id="altura" name="altura" value={formData.altura || ""} onChange={handleInputChange} />
         {formErrors.altura && <p>{formErrors.altura}</p>}
 
         <label htmlFor="peso">Peso:</label>
-        <input type="number" id="peso" name="peso" value={formData.peso} onChange={handleInputChange} />
+        <input type="number" id="peso" name="peso" value={formData.peso || ""} onChange={handleInputChange} />
         {formErrors.peso && <p>{formErrors.peso}</p>}
 
         <label htmlFor="tipos">Tipos:</label>
-        <select multiple id="tipos" name="tipos" value={formData.tipos} onChange={handleTypeChange}>
+        <select multiple id="tipos" name="tipos"  value={formData.tipos} onChange={handleTypeChange}>
           {type.map((tipos, index) =>
                         
               <option key={index} value={tipos} >
@@ -208,9 +239,9 @@ export default function FormPage(){
           {/* modificarlo para que solo acepte minimo 2 y hacerlo dinamico e incluir opcion de imagen*/}
         </select>
 
-        <label htmlFor="imagen">Imagen:</label>
-        <input type="file" id="imagen" name="imagen" onChange={handleImageChange} />
-        {formErrors.imagen && <p>{formErrors.imagen}</p>}
+        {/*<label htmlFor="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*" onChange={handleImageChange} />
+          {formErrors.imagen && <p>{formErrors.imagen}</p>}*/}
 
             <h2>quedaria probar si funciona y agregar el resto de logica para subir una imagen y verificar que sea una imagen </h2>
         <button type="submit">Crear Pokemon</button>
