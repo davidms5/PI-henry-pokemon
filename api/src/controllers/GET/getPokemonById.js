@@ -31,9 +31,7 @@ const getPokemonById = async(req, res) =>{
             
             let apiResponse = await requestAPI(idPokemon); 
 
-            let {species, id, sprites, stats, weight, height, types} = apiResponse;
-
-            let pokemon = modeloPokemon(species, id, sprites, stats, weight, height, types)
+            let pokemon = modeloPokemon(apiResponse)
             
             return res.status(200).json(pokemon);
         }
