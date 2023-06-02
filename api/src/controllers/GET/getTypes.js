@@ -1,5 +1,5 @@
 const {Types} = require("../../db");
-const {requestAPITypes} = require("./apiResponse/apiresponse.js")
+const {requestAPITypes} = require("./apiResponse/apiResponse.js")
 const getTypes = async(req, res) =>{
 
     try {
