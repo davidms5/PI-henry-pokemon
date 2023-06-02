@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { setAlphabeticOrder, setNameFilter, setSourceFilter, setTypeFilter, setOrderAttack } from "../../../store/actions";
 import { useDispatch, useSelector, } from "react-redux";
-import axios from "axios";
 export default  function SearchBar (){
 
     useEffect(() => {
@@ -12,21 +11,6 @@ export default  function SearchBar (){
         dispatch(setOrderAttack(""))
     }, [])
 
-    //useEffect(() =>{
-    //    const fetchPokemonTypes = async () => {
-    //        try {
-    //          const response = await axios.get(
-    //            process.env.REACT_APP_API_URL || "http://localhost:3001/types"
-    //          );
-    //          setType(response.data);
-    //        } catch (error) {
-    //          console.error("Failed to fetch pokemon types:", error);
-    //        }
-    //      };
-    //  
-    //      fetchPokemonTypes();
-    //}, [])
-    //const nameFilter = useSelector((state) => state.nameFilter)
 
     const dispatch = useDispatch();
     const type = useSelector((state) => state.pokemonTypes);
@@ -61,7 +45,7 @@ export default  function SearchBar (){
 
     return (
         <div>
-            <h2>soy una searchBar</h2>
+            
             <form onSubmit={handleNameFilter}>
 
                 <input type="text" placeholder="enter pokemon name" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} />

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addCreatedPokemon } from "../../store/actions";
+import { handleTypeChanges, handlerImageChanges, handlerInputChanges, prepareFormData } from "./FormPageValidations";
 export default function FormPage(){
 
   const dispatch = useDispatch();
@@ -35,140 +36,76 @@ export default function FormPage(){
   });
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    if (name === 'nombre') {
-      if (value.trim() === '') {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          nombre: 'Nombre no puede estar vacio',
-        }));
-      } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          nombre: '',
-        }));
-      }
-    } else if (['vida', 'ataque', 'defensa', 'velocidad', 'altura', 'peso'].includes(name)) {
-      if (value < 5 || value > 500) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: 'valor no puede ser menor a 5 o mayor a 500',
-        }));
-      } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: '',
-        }));
-      }
-    }
-
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+   handlerInputChanges(event, setFormData, setFormErrors)
   };
 
-  const handleTypeChange = (event) => {
-    const { name, value } = event.target;
-    const selectedTypes = formData.tipos;
+  const handleTypeChange = (event) =>(
+    handleTypeChanges(event, formData, setFormData, setFormErrors)
+  )
   
-    if (selectedTypes.includes(value)) {
-      const updatedTypes = selectedTypes.filter((type) => type !== value);
-      setFormData((prevData) => ({
-        ...prevData,
-        tipos: updatedTypes.length === 0 ? [] : updatedTypes,
-      }));
-    } else {
-      if (selectedTypes.length >= 2) {
-        alert("solo puedes seleccionar maximo 2 tipos a la vez")
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: "solo puedes seleccionar maximo 2 tipos a la vez"
-        }))
-      }
-      setFormData((prevData) => {
-        const newTypes = [...prevData.tipos, value];
-        return {
-          ...prevData,
-          tipos: newTypes.length > 2 ? newTypes.slice(-2) : newTypes,
-        };
-      });
-    }
-  };
   
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-    const fileType = file.type;
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg']; // Add more valid image types if needed
-
-    if (!validImageTypes.includes(fileType)) {
-      
-      alert('Please select a valid image file (JPEG, PNG, GIF, JPG).');
-      event.target.value = null; 
-      return;
-    };
-    setSelectedImage(file);
-   };
+    
+    handlerImageChanges(event, setSelectedImage)
    
   };
+
+  //function for range validation boolean
+  const isValidRange = (value) => value >= 1 && value <= 500;
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    
+    const { nombre, vida, ataque, defensa, velocidad, altura, peso } = formData;
+    //limit size for the image
+    const maxImageSizeInBytes = 6 * 1024 * 1024;
 
-    if (formData.vida < 1 || formData.vida > 500 || formData.ataque < 1 || formData.ataque > 500 ||
-      formData.defensa < 1 || formData.defensa > 500 || formData.velocidad < 1 || formData.velocidad > 500) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          vida: 'Input value must be between 1 and 500',
-          ataque: 'Input value must be between 1 and 500',
-          defensa: 'Input value must be between 1 and 500',
-          velocidad: 'Input value must be between 1 and 500',
-        }));
-        return;
-
-
+    if (
+    !isValidRange(vida) ||
+    !isValidRange(ataque) ||
+    !isValidRange(defensa) ||
+    !isValidRange(velocidad) ||
+    !isValidRange(altura) ||
+    !isValidRange(peso) || /^\d/.test(nombre)
+      ) {
+    setFormErrors({
+      nombre: "el valor no puede estar vacio y no puede empezar por numeros",
+      vida: 'El valor debe ser entre 1 y 500',
+      ataque: 'El valor debe ser entre 1 y 500',
+      defensa: 'El valor debe ser entre 1 y 500',
+      velocidad: 'El valor debe ser entre 1 y 500',
+      altura: 'El valor debe ser entre 1 y 500',
+      peso: 'El valor debe ser entre 1 y 500',
+      });
+    return;
     }
 
-    if (selectedImage && selectedImage.size > 6 * 1024 * 1024) {
+
+    if (selectedImage && selectedImage.size > maxImageSizeInBytes) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        imagen: 'Image size must be less than 6 MB.',
+        imagen: 'la imagen debe tener un peso menor a 6 MB.',
       }));
       return;
     }
 
     try {
       
-      //const postData = new FormData();
-      //postData.append('nombre', formData.nombre);
-      //postData.append('vida', formData.vida);
-      //postData.append('ataque', formData.ataque);
-      //postData.append('defensa', formData.defensa);
-      //postData.append('velocidad', formData.velocidad);
-      //postData.append('altura', formData.altura);
-      //postData.append('peso', formData.peso);
-      //formData.tipos.forEach((tipo) => postData.append('tipos[]', tipo));
-//
-      //if (selectedImage) {
-      //  postData.append('imagen', selectedImage);
-      //}
-
-     
+      const postData = prepareFormData(formData, selectedImage);
       
       
-      const newPokemon = await axios.post(process.env.REACT_APP_API_URL || 'http://localhost:3001/pokemons', formData); 
+      const newPokemon = await axios.post(process.env.REACT_APP_API_URL || 'http://localhost:3001/pokemons', postData); 
 
       
       setFormData({
         nombre: '',
-        vida: null,
-        ataque: null,
-        defensa: null,
-        velocidad: null,
-        altura: null,
-        peso: null,
+        vida: 0,
+        ataque: 0,
+        defensa: 0,
+        velocidad: 0,
+        altura: 0,
+        peso: 0,
         tipos: [],
       });
 
@@ -183,9 +120,10 @@ export default function FormPage(){
         tipos: '',
       })
 
-      // Display a success message or redirect to another page
+      
       dispatch(addCreatedPokemon({...newPokemon.data, Types: formData.tipos}))
       alert("pokemon creado con exito!");
+
     } catch (error) {
       
       console.error('Failed to create a new Pokemon:', error);
@@ -236,14 +174,14 @@ export default function FormPage(){
               </option>
                   
               )}
-          {/* modificarlo para que solo acepte minimo 2 y hacerlo dinamico e incluir opcion de imagen*/}
+          {/*  hacerlo dinamico e incluir opcion de imagen y validaciones javascript para imagenes*/}
         </select>
 
-        {/*<label htmlFor="imagen">Imagen:</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*" onChange={handleImageChange} />
-          {formErrors.imagen && <p>{formErrors.imagen}</p>}*/}
+        <label htmlFor="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen"  onChange={handleImageChange} />
+          {formErrors.imagen && <p>{formErrors.imagen}</p>}
 
-            <h2>quedaria probar si funciona y agregar el resto de logica para subir una imagen y verificar que sea una imagen </h2>
+            
         <button type="submit">Crear Pokemon</button>
       </form>
         </div>
