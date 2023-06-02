@@ -1,12 +1,13 @@
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
 
-const cloudinaryStorage = multerCloudinary({
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+
+const storageCloud = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'your-folder-name',//crear la carpeta en cloudinary, y hacer pruebas
-    allowed_formats: ['jpeg', 'png', 'jpg'],
-  },
+  folder: '/',
+  allowed_formats: ['jpeg', 'png', 'jpg'],
+  
 });
 
-module.exports = cloudinaryStorage;
+module.exports = storageCloud;

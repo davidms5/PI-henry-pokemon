@@ -5,7 +5,10 @@ const getAllPokemons = require("../controllers/GET/getAllPokemons");
 const getPokemonById = require('../controllers/GET/getPokemonById');
 const getTypes = require('../controllers/GET/getTypes');
 const CreatePokemon = require('../controllers/POST/createPokemon');
+const multer = require('multer');
 
+const storageCloud = require("../config/configs")
+const upload = multer({ storage: storageCloud });
 
 
 const router = Router();
@@ -18,5 +21,5 @@ router.get("/pokemons/:idPokemon", getPokemonById);
 
 router.get("/types", getTypes);
 
-router.post("/pokemons", CreatePokemon);
+router.post("/pokemons", upload.single('imagen'), CreatePokemon);
 module.exports = router;
