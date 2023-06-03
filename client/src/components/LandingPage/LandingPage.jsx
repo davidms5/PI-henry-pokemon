@@ -10,10 +10,10 @@ function LandingPage() {
 
   return (
     <div>
-        hola mundo
+       <h1>bienvenido a Pokemon!</h1>
         <br />
       <button onClick={redirectToPokemonList}>
-        Show Pokemon List
+        Ingresar
       </button>
     </div>
   );

@@ -4,7 +4,8 @@ import SearchBar from './SearchBar/SearchBar';
 import Cards from './DisplayCards/Cards';
 import { Link } from 'react-router-dom';
 import { fetchPokemon, fetchReset } from '../../store/actions';
-import "./MainPage.css"
+import { MainPageContainer } from './MainPageStyles';
+//import "./MainPage.css"
 
 export default function MainPage() {
   // aqui tambien se podria aplicar un useEffect que se ejecutara cada vez que se accediera a este component, y verificara si pokemon.length > 0, de no ser asi hiciera un solo fetch de la api para llenar la lista con los pokemon
@@ -35,11 +36,12 @@ export default function MainPage() {
   }
 
   return (
-    <div>
-      <h1>Pokemon</h1>
+    <MainPageContainer >
+      <br />
       <div>
         <SearchBar/>
 
+        <br />
         <div >
 
           <Link to="/create-pokemon">
@@ -50,11 +52,12 @@ export default function MainPage() {
             <button>volver a pantalla de inicio</button>
           </Link>
         </div>
+        <br />
         
       </div>
       
       <Cards/>
       
-    </div>
+    </MainPageContainer>
   );
 }
