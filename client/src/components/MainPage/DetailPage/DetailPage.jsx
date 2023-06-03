@@ -25,7 +25,7 @@ export default function DetailPage(){
       }, [nombre]);
     return (
         <div>
-            {console.log(urlDetail)}
+            
             <h2>nombre: {pokemonDetail.nombre}</h2>
             <p>ID: {pokemonDetail.id}</p>
             <img src={pokemonDetail.imagen} alt={`${nombre}`} />

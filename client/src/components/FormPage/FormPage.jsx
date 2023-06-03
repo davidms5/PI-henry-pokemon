@@ -70,7 +70,7 @@ export default function FormPage(){
     !isValidRange(peso) || /^\d/.test(nombre)
       ) {
     setFormErrors({
-      nombre: "el valor no puede estar vacio y no puede empezar por numeros",
+      nombre: "el valor no puede estar vacio y no puede empezar con numeros",
       vida: 'El valor debe ser entre 1 y 500',
       ataque: 'El valor debe ser entre 1 y 500',
       defensa: 'El valor debe ser entre 1 y 500',
