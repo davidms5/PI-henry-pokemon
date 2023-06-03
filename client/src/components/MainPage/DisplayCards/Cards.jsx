@@ -17,6 +17,10 @@ export default function Cards(){
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
 
+    //set to page 1 if filter is applied
+    useEffect(() => {
+      setCurrentPage(1);
+    }, [filterName, filterSource, filterType, sortOrder, filterAttack]);
    
 
       const filteredPokemon = filterPokemon(pokemon, filterName, filterSource, filterType);
