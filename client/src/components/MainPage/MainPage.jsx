@@ -39,9 +39,18 @@ export default function MainPage() {
       <h1>Pokemon</h1>
       <div>
         <SearchBar/>
-        <Link to="/create-pokemon">
-            <button >create new pokemon</button>
-        </Link>
+
+        <div >
+
+          <Link to="/create-pokemon">
+            <button >Crear nuevo pokemon</button>
+          </Link>
+
+          <Link to="/">
+            <button>volver a pantalla de inicio</button>
+          </Link>
+        </div>
+        
       </div>
       
       <Cards/>

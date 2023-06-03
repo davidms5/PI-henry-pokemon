@@ -7,12 +7,13 @@ export default function DetailPage(){
     const [pokemonDetail, setPokemonDetail] = useState({})
 
     const {nombre} = useParams();
+    const urlDetail = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchPokemonDetail = async () => {
           try {
             const response = await axios.get(
-              `http://localhost:3001/pokemons/?name=${nombre}`
+              `${urlDetail}/?name=${nombre}`
             );
             setPokemonDetail(response.data);
           } catch (error) {
@@ -24,7 +25,7 @@ export default function DetailPage(){
       }, [nombre]);
     return (
         <div>
-
+            {console.log(urlDetail)}
             <h2>nombre: {pokemonDetail.nombre}</h2>
             <p>ID: {pokemonDetail.id}</p>
             <img src={pokemonDetail.imagen} alt={`${nombre}`} />

@@ -17,6 +17,7 @@ import {
          REACT_APP_API_URL_TYPES,
           REACT_APP_API_URL_DEVELOPMENT,
            REACT_APP_API_URL_TYPES_DEVELOPMENT} = process.env
+           
 export const fetchPokemon = () => async(dispatch) =>{
     try {
         dispatch({type: FETCH_POKEMON});

@@ -21,7 +21,6 @@ const initialState = {
     pokemonAPI: [],
     pokemonTypes: [],
     loadingPage: false,
-   // pagination: 1,
     error: null,
     nameFilter:"",
     sourceFilter:"",
