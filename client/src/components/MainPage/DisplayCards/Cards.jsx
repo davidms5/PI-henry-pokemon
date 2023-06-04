@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import Card from "./Card/Card";
 import { filterPokemon, sortPokemon } from "./cardsLogic";
-import { CardContainer } from "./CardsStyles";
+import { ButtonPage, CardContainer } from "./CardsStyles";
 
 export default function Cards(){
 
@@ -49,13 +49,13 @@ export default function Cards(){
         <div>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
               (page) => (
-              <button
+              <ButtonPage
               key={page}
               onClick={() => handlePageChange(page)}
               disabled={currentPage === page}
               >
               {page}
-              </button>
+              </ButtonPage>
                 )
             )}
         </div>
@@ -77,13 +77,14 @@ export default function Cards(){
           <div>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
               (page) => (
-              <button
+              <ButtonPage
               key={page}
               onClick={() => handlePageChange(page)}
               disabled={currentPage === page}
+              className="buttonPage"
               >
               {page}
-              </button>
+              </ButtonPage>
                 )
             )}
         </div>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 export const CardContainer = styled.div`
   display: grid;
@@ -12,3 +12,18 @@ export const CardContainer = styled.div`
   }
   
 `;
+
+export const ButtonPage = styled.button`
+        cursor: pointer;
+        color: blue;
+        text-shadow: 1px 0 0 blue;
+        background-color: yellow;
+        border: 2px solid blue;
+        border-radius: 5px;
+        ${props =>
+      props.disabled &&
+      css`
+      background-color: #6c757d;
+      color: #ffffff;
+      cursor: auto`}
+`

@@ -51,11 +51,11 @@ export default function MainPage() {
         <div >
 
           <Link to="/create-pokemon">
-            <button >Crear nuevo pokemon</button>
+            <button className='button-main'>Crear nuevo pokemon</button>
           </Link>
 
           <Link to="/">
-            <button>volver a pantalla de inicio</button>
+            <button className='button-main'>volver a pantalla de inicio</button>
           </Link>
         </div>
         <br />

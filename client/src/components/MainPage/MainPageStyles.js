@@ -2,7 +2,14 @@ import styled from "styled-components";
 
 export const MainPageContainer = styled.div`
     margin-bottom: 10%;
-
+    .button-main{
+        cursor: pointer;
+        color: blue;
+        text-shadow: 1px 0 0 blue;
+        background-color: yellow;
+        border: 2px solid blue;
+        border-radius: 5px;
+    }
 `;
 
 export const LoadingContainer = styled.div`

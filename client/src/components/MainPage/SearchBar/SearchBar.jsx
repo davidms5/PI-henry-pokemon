@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { setAlphabeticOrder, setNameFilter, setSourceFilter, setTypeFilter, setOrderAttack } from "../../../store/actions";
 import { useDispatch, useSelector, } from "react-redux";
+import "./SearchBar.css"
+
 export default  function SearchBar (){
 
     useEffect(() => {
@@ -44,7 +46,7 @@ export default  function SearchBar (){
       };
 
     return (
-        <div>
+        <div className="container">
             
             <form onSubmit={handleNameFilter}>
 
@@ -85,7 +87,7 @@ export default  function SearchBar (){
                     <option value="ascendente">menor ataque</option>
                 </select>
                
-               <button onClick={handleReset}>
+               <button onClick={handleReset} className="button-reset">
                 reset a valores por defecto
                </button>
             </form>
