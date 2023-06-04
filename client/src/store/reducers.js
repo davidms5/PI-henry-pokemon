@@ -72,5 +72,5 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
 
 const persistedReducer = persistReducer(persistConfig, pokemonReducer);
 
-
+//export default pokemonReducer;
 export default persistedReducer;

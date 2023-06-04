@@ -13,16 +13,13 @@ import {
     ADD_CREATED_POKEMON } from "./actionTypes"
 
 
-    const {REACT_APP_API_URL,
-         REACT_APP_API_URL_TYPES,
-          REACT_APP_API_URL_DEVELOPMENT,
-           REACT_APP_API_URL_TYPES_DEVELOPMENT} = process.env
+    const {REACT_APP_API_URL, REACT_APP_API_URL_TYPES,} = process.env
            
 export const fetchPokemon = () => async(dispatch) =>{
     try {
         dispatch({type: FETCH_POKEMON});
-        const response = await axios.get(REACT_APP_API_URL||REACT_APP_API_URL_DEVELOPMENT);
-        const responseTypes = await axios.get(REACT_APP_API_URL_TYPES||REACT_APP_API_URL_TYPES_DEVELOPMENT);
+        const response = await axios.get("http://localhost:3001/pokemons");
+        const responseTypes = await axios.get("http://localhost:3001/types");
         const tiposPokemon = await responseTypes.data;
         const pokemons = await response.data;
 

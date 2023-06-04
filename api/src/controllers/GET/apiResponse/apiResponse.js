@@ -83,7 +83,7 @@ const requestAPITypes = async() => {
     const {results} = response.data;
 
     const listTypes = results
-    .filter(type => type.name !== "fairy")
+    .filter(type => type.name !== "fairy" && type.name !== "unknown")
     .map(type => {
         return {NOMBRE:type.name}
     });

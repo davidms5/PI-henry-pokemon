@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { LandingContainer } from "./LandingPage";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -9,13 +10,14 @@ function LandingPage() {
   };
 
   return (
-    <div>
-       <h1>bienvenido a Pokemon!</h1>
+    <LandingContainer>
+        <h1>A Henry Pokemon Project</h1>
+       <img src={process.env.PUBLIC_URL + "/fonts/pokemon-logo-png-0.png"} alt="pokemon logo" />
         <br />
       <button onClick={redirectToPokemonList}>
         Ingresar
       </button>
-    </div>
+    </LandingContainer>
   );
 }
 

@@ -4,7 +4,7 @@ import SearchBar from './SearchBar/SearchBar';
 import Cards from './DisplayCards/Cards';
 import { Link } from 'react-router-dom';
 import { fetchPokemon, fetchReset } from '../../store/actions';
-import { MainPageContainer } from './MainPageStyles';
+import { LoadingContainer, MainPageContainer } from './MainPageStyles';
 //import "./MainPage.css"
 
 export default function MainPage() {
@@ -28,7 +28,13 @@ export default function MainPage() {
   }, [error]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+    <LoadingContainer>
+      <img src={process.env.PUBLIC_URL + "/fonts/pikachu_loading.gif"} alt="loading" />
+      <br />
+      <h3>Loading...</h3>
+      </LoadingContainer>
+    );
   }
 
   if (error) {

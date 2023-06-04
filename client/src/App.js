@@ -7,7 +7,7 @@ import DetailPage from './components/MainPage/DetailPage/DetailPage';
 function App() {
   return (
     <div className="App">
-      <h1>Henry Pokemon Project</h1>
+      
       <Routes>
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/pokemon" element={<MainPage/>}/>

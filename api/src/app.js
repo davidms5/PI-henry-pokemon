@@ -16,6 +16,7 @@ server.use(cookieParser());
 server.use(morgan('dev'));
 
 const listaDeOrigins = ["http://localhost:3000", "https://pi-henry-pokemon-s4xa.vercel.app"]
+
 server.use((req, res, next) => {
   const origin = req.headers.origin;
   if (listaDeOrigins.includes(origin)) {
