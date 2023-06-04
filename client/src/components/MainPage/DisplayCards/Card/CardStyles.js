@@ -9,10 +9,18 @@ export const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 0, 0.4);
+  p{
+    margin-top: 0;
+  }
 `;
 
 export const CardImage = styled.img`
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 80%;
+  max-height: 85%;
   object-fit: contain;
 `;
+
+export const ImageType = styled.img`
+  max-width: 50px;
+  max-height: 50px;
+`

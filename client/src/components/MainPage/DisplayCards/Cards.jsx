@@ -64,7 +64,7 @@ export default function Cards(){
         { currentPokemon.length > 0?
             currentPokemon.map((p, index) => (
             <div key={index}>
-              <Link to={`/pokemon/${p.nombre}`}>
+              <Link to={`/pokemon/${p.nombre}`} className="custom-link">
                 <Card pokemon={p} />
               </Link>
             

@@ -78,13 +78,13 @@ export const handlerImageChanges = (event, setSelectedImage) => {
 
     if (!validImageTypes.includes(fileType)) {
       
-      alert('Please select a valid image file (JPEG, PNG, JPG).');
+      alert('Por favor inserte una imagen tipo: (JPEG, PNG, JPG).');
       event.target.value = null; 
       return;
     };
 
     if (file.size > validMaxSizeInBytes) {
-      alert('The selected image file is too large. Please select a file up to 6MB.');
+      alert('la imagen seleccionada en muy grande. seleccione una imagen menor a 6MB.');
       event.target.value = null;
       return;
     }

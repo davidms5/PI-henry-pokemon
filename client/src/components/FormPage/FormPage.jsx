@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { addCreatedPokemon } from "../../store/actions";
 import { handleTypeChanges, handlerImageChanges, handlerInputChanges, prepareFormData } from "./FormPageValidations";
+import { FormContainer, GridTypes, ImageIcons } from "./FormStyles";
+import { iconTypes } from "../iconTypes";
 export default function FormPage(){
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const type = useSelector((state) => state.pokemonTypes);
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -57,6 +61,7 @@ export default function FormPage(){
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    
     const { nombre, vida, ataque, defensa, velocidad, altura, peso } = formData;
     //limit size for the image
     const maxImageSizeInBytes = 6 * 1024 * 1024;
@@ -123,6 +128,7 @@ export default function FormPage(){
       
       dispatch(addCreatedPokemon({...newPokemon.data, Types: formData.tipos}))
       alert("pokemon creado con exito!");
+      navigate("/pokemon")
 
     } catch (error) {
       
@@ -131,9 +137,10 @@ export default function FormPage(){
   };
     
     return (
-        <div>formulario pokemon
+        <FormContainer>
+           
+          <h2>Nuevo Pokemon</h2>
           <Link to="/pokemon"><button>go back</button></Link>
-          <h2>Create a New Pokemon</h2>
         
       <form onSubmit={handleSubmit}>
         {/* ir viendo y agregando excepciones */}
@@ -166,25 +173,41 @@ export default function FormPage(){
         {formErrors.peso && <p>{formErrors.peso}</p>}
 
         <label htmlFor="tipos">Tipos:</label>
-        <select multiple id="tipos" name="tipos"  value={formData.tipos} onChange={handleTypeChange}>
-          {type.map((tipos, index) =>
-                        
-              <option key={index} value={tipos} >
-                  {tipos}
-              </option>
-                  
-              )}
-          {/*  hacerlo dinamico e incluir opcion de imagen y validaciones javascript para imagenes*/}
-        </select>
+        <GridTypes >
+          {type.map((tipo, index) => (
+            <label key={index}>
+              <input
+                type="checkbox"
+                name="tipos"
+                value={tipo}
+                checked={formData.tipos.includes(tipo)}
+                onChange={handleTypeChange}
+              />
+               <ImageIcons src={iconTypes[tipo]} alt={tipo} />
+              {tipo}
+            </label>
+          ))}
+        </GridTypes>
 
+            <br />
         <label htmlFor="imagen">Imagen:</label>
-        <input type="file" id="imagen" name="imagen"  onChange={handleImageChange} />
+        <br />
+        <input type="file" id="imagen" name="imagen"  onChange={handleImageChange} style={{ display: "none" }}/>
           {formErrors.imagen && <p>{formErrors.imagen}</p>}
+          <button htmlFor="imagen" onClick={() => document.getElementById('imagen').click()}>elige una imagen</button>
 
-            
+          <br />
+          {selectedImage && (
+          <img
+            src={URL.createObjectURL(selectedImage)}
+            alt="Selected Image"
+            className="selected-image"
+          />
+        )}
+        <br />
         <button type="submit">Crear Pokemon</button>
       </form>
-        </div>
+        </FormContainer>
         
     )
 }

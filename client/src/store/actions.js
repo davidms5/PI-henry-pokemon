@@ -18,7 +18,7 @@ import {
 export const fetchPokemon = () => async(dispatch) =>{
     try {
         dispatch({type: FETCH_POKEMON});
-        const response = await axios.get("http://localhost:3001/pokemons");
+        const response = await axios.get("http://localhost:3001/pokemons"); //cambio aqui y en la linea de abajo
         const responseTypes = await axios.get("http://localhost:3001/types");
         const tiposPokemon = await responseTypes.data;
         const pokemons = await response.data;
