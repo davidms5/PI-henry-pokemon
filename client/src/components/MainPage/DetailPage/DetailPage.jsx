@@ -8,16 +8,10 @@ import { iconTypes } from "../../iconTypes";
 
 export default function DetailPage(){
 
-  const renderTypeImages = () => {
-    return pokemonType.map((type, index) => (
-      <ImageType key={index} src={process.env.PUBLIC_URL + iconTypes[type]} alt={type} />
-    ));
-  };
-
     const [pokemonDetail, setPokemonDetail] = useState({})
     const [pokemonType, setPokemonType] = useState([])
     const {nombre} = useParams();
-    const urlDetail = "http://localhost:3001/pokemons" ||process.env.REACT_APP_API_URL //cambio
+    const urlDetail = process.env.REACT_APP_API_URL 
 
     useEffect(() => {
         const fetchPokemonDetail = async () => {
