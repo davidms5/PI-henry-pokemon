@@ -41,7 +41,7 @@ const getAllPokemons = async(req, res) =>{
           
         } catch (error) {
             console.log(error.message)
-            return res.status(500).json({message: error.message})
+            return res.status(500).json({message: error.message, messageUser: "hubo un error en el server, intente de nuevo mas tarde"})
         }
     } else {
 
@@ -62,7 +62,7 @@ const getAllPokemons = async(req, res) =>{
         return res.status(200).json([...responseAPI, ...mergedData]);
 
         } catch (error){
-        return res.status(500).json({message: error.message})
+        return res.status(500).json({message: error.message, messageUser: "hubo un error en el server, intente de nuevo mas tarde"})
         }
 
     }

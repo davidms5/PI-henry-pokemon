@@ -8,13 +8,13 @@ import { ADD_CREATED_POKEMON, FETCH_POKEMON,
     SET_ORDER_ATTACK,
     SET_SOURCE_FILTER,
     SET_TYPE_FILTER, } from "./actionTypes";
-//import {persistReducer} from "redux-persist";
-//import storageSession from "redux-persist/lib/storage/session";
+import {persistReducer} from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
 
-//const persistConfig = {
-//    key: 'root',
-//    storage: storageSession,
-//  };
+const persistConfig = {
+    key: 'root',
+    storage: storageSession,
+  };
  
 
 const initialState = {
@@ -70,7 +70,7 @@ const pokemonReducer = (state = initialState, {type, payload, error}) =>{
     }
 }
 
-//const persistedReducer = persistReducer(persistConfig, pokemonReducer);
+const persistedReducer = persistReducer(persistConfig, pokemonReducer);
 
-export default pokemonReducer;
-//export default persistedReducer;
+//export default pokemonReducer;
+export default persistedReducer;

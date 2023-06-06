@@ -9,7 +9,7 @@ const getPokemonById = async(req, res) =>{
 
     const prueba = regexExp.test(idPokemon)
     try {
-        if(!idPokemon) return res.status(404).send("pokemon no encontrado")
+        if(!idPokemon) return res.status(404).json({errorUser:"pokemon no encontrado"})
         
         if(prueba){
             let response = await Pokemon.findOne({
@@ -21,13 +21,13 @@ const getPokemonById = async(req, res) =>{
                 }
             });
 
-            if(!response) return res.status(404).send("el pokemon no existe");//hacer test de esta linea
+            if(!response) return res.status(404).json({errorUser:"pokemon no encontrado"});//hacer test de esta linea
 
             return res.status(200).json(response);
 
         } else {
 
-            if (isNaN(parseFloat(idPokemon)) || isNaN(idPokemon - 0)) return res.status(404).json({error:"id not valid"})
+            if (isNaN(parseFloat(idPokemon)) || isNaN(idPokemon - 0)) return res.status(404).json({error:"id no valido"})
             
             let apiResponse = await requestAPI(idPokemon); 
 
@@ -41,7 +41,7 @@ const getPokemonById = async(req, res) =>{
        
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({message: error.message});
+        return res.status(500).json({message: error.message, messageUser: "hubo un error en el server, intente de nuevo mas tarde"});
     }
 };
 
