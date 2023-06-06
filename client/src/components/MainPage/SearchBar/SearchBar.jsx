@@ -5,13 +5,13 @@ import "./SearchBar.css"
 
 export default  function SearchBar (){
 
-    useEffect(() => {
-        dispatch(setNameFilter(""));
-        dispatch(setTypeFilter(""));
-        dispatch(setAlphabeticOrder("default"));
-        dispatch(setSourceFilter(""));
-        dispatch(setOrderAttack(""))
-    }, [])
+    //useEffect(() => {
+   //     dispatch(setNameFilter(""));
+    //    dispatch(setTypeFilter(""));
+    //    dispatch(setAlphabeticOrder("default"));
+    //    dispatch(setSourceFilter(""));
+    //    dispatch(setOrderAttack(""))
+   // }, [])
 
 
     const dispatch = useDispatch();
