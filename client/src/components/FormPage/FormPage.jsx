@@ -123,7 +123,9 @@ export default function FormPage(){
         altura:'',
         peso:'',
         tipos: '',
-      })
+      });
+
+      setSelectedImage(null);
 
       
       dispatch(addCreatedPokemon({...newPokemon.data, Types: formData.tipos}))
