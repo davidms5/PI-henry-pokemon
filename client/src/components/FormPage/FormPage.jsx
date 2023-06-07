@@ -6,6 +6,7 @@ import { addCreatedPokemon } from "../../store/actions";
 import { handleTypeChanges, handlerImageChanges, handlerInputChanges, prepareFormData } from "./FormPageValidations";
 import { FormContainer, GridTypes, ImageIcons } from "./FormStyles";
 import { iconTypes } from "../iconTypes";
+
 export default function FormPage(){
 
   const dispatch = useDispatch();
@@ -14,7 +15,10 @@ export default function FormPage(){
   const type = useSelector((state) => state.pokemonTypes);
 
   const [selectedImage, setSelectedImage] = useState(null);
- 
+
+  const [errorMessageBack, setErrorMessageBack] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -59,10 +63,15 @@ export default function FormPage(){
 
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
 
+    setErrorMessageBack(false);
+
     
+
     const { nombre, vida, ataque, defensa, velocidad, altura, peso } = formData;
+
     //limit size for the image
     const maxImageSizeInBytes = 6 * 1024 * 1024;
 
@@ -96,7 +105,7 @@ export default function FormPage(){
     }
 
     try {
-      
+      setLoading(true);
       const postData = prepareFormData(formData, selectedImage);
       
       
@@ -130,11 +139,13 @@ export default function FormPage(){
       
       dispatch(addCreatedPokemon({...newPokemon.data, Types: formData.tipos}))
       alert("pokemon creado con exito!");
-      navigate("/pokemon")
+      setLoading(false);
+      navigate("/pokemon");
 
     } catch (error) {
       
       console.error('Failed to create a new Pokemon:', error);
+      setErrorMessageBack(true)
     }
   };
     
@@ -196,7 +207,7 @@ export default function FormPage(){
         <br />
         <input type="file" id="imagen" name="imagen"  onChange={handleImageChange} style={{ display: "none" }}/>
           {formErrors.imagen && <p>{formErrors.imagen}</p>}
-          <button htmlFor="imagen" onClick={() => document.getElementById('imagen').click()}>elige una imagen</button>
+          <button htmlFor="imagen" type="button" onClick={() => document.getElementById('imagen').click()}>elige una imagen</button>
 
           <br />
           {selectedImage && (
@@ -209,6 +220,16 @@ export default function FormPage(){
         <br />
         <button type="submit">Crear Pokemon</button>
       </form>
+          
+          
+      {loading && <div >
+      <img src={process.env.PUBLIC_URL + "/fonts/pikachu_loading.gif"} alt="loading" className="loading-icon"/>
+      <br />
+      <h3>Loading...</h3>
+      </div>}
+
+      {errorMessageBack && <h4>hubo un error en el servidor, intente de nuevo mas tarde</h4>}
+      
         </FormContainer>
         
     )

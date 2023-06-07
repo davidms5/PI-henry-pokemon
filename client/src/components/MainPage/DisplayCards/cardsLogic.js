@@ -28,9 +28,9 @@ export function filterPokemon(pokemon, filterName, filterSource, filterType) {
 
       const sortedPokemonByAttack = [...sortedPokemon].sort((a, b) => {
         if (filterAttack === "ascendente") {
-          return a.ataque - b.ataque;
+          return a.ataque - b.ataque; //retorna desde el de menor ataque (a) hasta el mayor (b)
         } else if (filterAttack === "descendente") {
-          return b.ataque - a.ataque;
+          return b.ataque - a.ataque; //lo inverso a lo de arriba
         } else {
           return 0;
         }

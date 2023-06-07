@@ -16,4 +16,5 @@ export const iconTypes = {
     rock: "/fonts/types/Rock_icon_SwSh.png",
     steel: "/fonts/types/Steel_icon_SwSh.png",
     water: "/fonts/types/Water_icon_SwSh.png",
+    fairy: "/fonts/types/Fairy_icon_SwSh.png",
 }

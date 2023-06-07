@@ -9,14 +9,19 @@ export const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 0, 0.4);
+  transition: transform 0.2s ease;
   p{
     margin-top: 0;
+  }
+
+  :hover{
+    transform: scale(1.1);
   }
 `;
 
 export const CardImage = styled.img`
-  max-width: 80%;
-  max-height: 85%;
+  max-width: 70%;
+  max-height: 70%;
   object-fit: contain;
 `;
 

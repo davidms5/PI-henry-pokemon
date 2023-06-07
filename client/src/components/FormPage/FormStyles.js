@@ -77,7 +77,13 @@ export const FormContainer = styled.div`
     max-width: 100%;
     height: auto;
     margin-top: 10px;
-  }
+     };
+
+    .loading-icon{
+        width: 35%;
+        height: 35%;
+        
+    }
 `;
 
 export const GridTypes = styled.div`
