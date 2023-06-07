@@ -105,7 +105,7 @@ export const prepareFormData = (formData, selectedImage) => {
     postData.append('peso', formData.peso);
     formData.tipos.forEach((tipo) => postData.append('tipos[]', tipo));
   
-    if (selectedImage) {
+    if (selectedImage !== null) {
       postData.append('imagen', selectedImage);
     }
   
