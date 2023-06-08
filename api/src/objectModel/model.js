@@ -1,6 +1,7 @@
 const modeloPokemon = (pokemons) =>{
 
     const pokemonFinal = []
+    
     if(Array.isArray(pokemons)){
        for(const pokemonDetail of pokemons){
         const {species, id, sprites, stats, weight, height, types} = pokemonDetail.data;

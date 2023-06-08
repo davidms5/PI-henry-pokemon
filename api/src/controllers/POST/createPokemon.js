@@ -44,8 +44,8 @@ const CreatePokemon = async(req, res) =>{
      })
 
      const typeInstances = await Types.findAll({ where: { NOMBRE: tipos } });
-
-     await newPokemon.setTypes(typeInstances);
+ await newPokemon.setTypes(typeInstances);
+    
 
      return res.status(201).json(newPokemon);
 
