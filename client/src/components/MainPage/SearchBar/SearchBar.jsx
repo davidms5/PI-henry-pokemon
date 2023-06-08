@@ -21,7 +21,7 @@ export default  function SearchBar (){
     const [filterSource, setFilterSource] = useState("");
     const [filterType, setFilterType] = useState("");
     const [letterOrder, setLetterOrder] = useState("default");
-    const [sortingAttack, setSortingAttack] = useState("");
+    const [sortingAttack, setSortingAttack] = useState("default");
     
     const handleNameFilter =(e) =>{
         e.preventDefault();
@@ -29,13 +29,34 @@ export default  function SearchBar (){
         dispatch(setNameFilter(searchQuery));
 
         dispatch(setSourceFilter(filterSource));
-        
-        dispatch(setTypeFilter(filterType));
 
         dispatch(setAlphabeticOrder(letterOrder));
 
-        dispatch(setOrderAttack(sortingAttack));
+        
     };
+
+    function setAttack(event){
+
+        const {value} = event.target;
+        setSortingAttack(value);
+
+        dispatch(setOrderAttack(value));
+    };
+
+    function handleTypes(event){
+
+        const {value} = event.target;
+        setFilterType(value);
+        dispatch(setTypeFilter(value));
+    };
+
+   // function handleOrderLetter(event){
+//
+   //     const {value} = event.target;
+   //     setLetterOrder(value);
+   // }
+
+
 
     const handleReset = () => {
         setSearchQuery("");
@@ -62,7 +83,7 @@ export default  function SearchBar (){
                 </select>
 
                 <label htmlFor="tipo">Tipo: </label>
-                <select value={filterType} onChange={event => setFilterType(event.target.value)}>
+                <select value={filterType} onChange={event => handleTypes(event)}>
                     <option key="all" value="all">All</option>
                     {type.map((tipos, index) =>
                         
@@ -81,7 +102,7 @@ export default  function SearchBar (){
                 </select>
 
                 <label htmlFor="orden ataque">Orden Ataque</label>
-                <select value={sortingAttack} onChange={event => setSortingAttack(event.target.value)}>
+                <select value={sortingAttack} onChange={event => setAttack(event)}>
                     <option value="default">normal</option>
                     <option value="descendente">mayor ataque</option>
                     <option value="ascendente">menor ataque</option>
