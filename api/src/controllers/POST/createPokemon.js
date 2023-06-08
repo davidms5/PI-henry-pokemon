@@ -22,18 +22,14 @@ const CreatePokemon = async(req, res) =>{
       return res.status(400).json({message:"falta informacion para crear el pokemon ó el nombre de las variables recibidas es erroneo"});
      }
 
-    let url = null;
-    let imagen = file.path;
+    let url = process.env.DEFAULT_IMAGE;
     
 
-    if(imagen){
+    if(file){
 
-      const uploadedImage = await cloudinary.uploader.upload(imagen);
+      const uploadedImage = await cloudinary.uploader.upload(file.path);
       url = uploadedImage.secure_url;
       
-
-    } else {
-      url = process.env.DEFAULT_IMAGE;
     }
 
      const newPokemon = await Pokemon.create({
@@ -54,6 +50,7 @@ const CreatePokemon = async(req, res) =>{
      return res.status(201).json(newPokemon);
 
   } catch (error) {
+    console.log(error)
     return res.status(500).json({message: error})
   }
   

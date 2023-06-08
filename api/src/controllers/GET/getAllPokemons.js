@@ -22,7 +22,7 @@ const getAllPokemons = async(req, res) =>{
                const namePokemon = await requestAPI(name); 
 
                if(!namePokemon){
-                return res.status(404).send("el pokemon no existe")
+                return res.status(404).json({messageError:"el pokemon no existe"})
                }
                
                const datapokemon = modeloPokemon(namePokemon);
